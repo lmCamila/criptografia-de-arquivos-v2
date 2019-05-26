@@ -185,10 +185,12 @@ const sendFile = function () {
                     throw true
                 }
             }).then(retorno => {
+                console.log(retorno)
                 checkRespJSONServer(retorno, `Arquivo salvo com sucesso`)
                 getFilesUser()
             })
             .catch((error) => {
+                console.log(error)
                 alertSend(`<strong>Erro! </strong>Falha ao enviar arquivo do usuário.`, 'alert-danger')
                 openModalLoad(false)
                 getFilesUser()
@@ -232,6 +234,7 @@ const getFilesUser = function () {
             }
         })
         .then(data => {
+            console.log(data)
             window.files = JSON.parse(data)
             insetDataFilesTable(window.files)
             openModalLoad(false)
@@ -455,6 +458,7 @@ const sendCompartilhamento = function (e) {
                 }
             })
             .then(retorno => {
+                console.log(retorno)
                 openModalCompartilhar(false, e)
                 checkRespJSONServer(retorno, `Arquivo compartilhado`)
             })
