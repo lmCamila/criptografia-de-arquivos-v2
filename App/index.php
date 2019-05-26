@@ -331,8 +331,8 @@ $app->get('/logout',function(Requests $request,Response $response,array $args){
 });
 
 $app->get('/teste', function(Requests $request, Response $response,array $args){
-		$password = password_hash("teste123", PASSWORD_DEFAULT, [ "cost"=>12]);
-		$user = hash("sha512","teste123",false);
+		$password = password_hash("teste", PASSWORD_DEFAULT, [ "cost"=>12]);
+		$user = hash("sha512","teste",false);
 		$encryption_key = base64_encode(openssl_random_pseudo_bytes(32));
 		return json_encode(array(
 		"user" => $user,

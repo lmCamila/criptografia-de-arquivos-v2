@@ -16,25 +16,25 @@ class Users extends Model{
 		$results = $sql->select("SELECT * FROM  users WHERE login = :LOGIN",array(
 			':LOGIN'=>$user
 		));
-		print_r($results);
-		exit();
 		//verifica se foi retornado algum usúario do banco
 		if(count($results) === 0){
 			throw new \Exception("Usuário inexistente ou senha inválida.");
 		}
 		// se retornado algum valor , pega o primeiro valor do array e atribui a variavel data
 		$data = $results[0];
+
 		// se a senha estiver correta ele criará um usúario, atribuira os valores retornados na variavel data e seta na sessão
 		if(password_verify($password,$data["password"]) === true){
 			$user = new Users();
 			$user->setData($data);
 			$_SESSION[Users::SESSION] = $user->getValues();
+			
 		}else{
 			throw new \Exception("Usuário inexistente ou senha inválida.");
 			
 		}
 
-		$dir = "./users/".$data['deslogin'];
+		$dir = "./users/".$data['login'];
 		if(!is_dir($dir)){
 			mkdir($dir);
 		}
@@ -44,9 +44,8 @@ class Users extends Model{
 		//verifica se o usuario possui uma sessão aberta 
 		if(!isset($_SESSION[Users::SESSION])
 			|| !$_SESSION[Users::SESSION]
-			|| !(int)$_SESSION[Users::SESSION]["iduser"] > 0		
+			|| !(int)$_SESSION[Users::SESSION]["id"] > 0		
 		){
-
 			header("Location: /");
 			exit();
 		}
