@@ -1,0 +1,1 @@
+18/10 - Primeira integração a inplementação do client com o servidor, para primeira vista de projeto da disciplina em 22/10 pelo professor.

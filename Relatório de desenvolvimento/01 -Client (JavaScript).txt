@@ -1,0 +1,4 @@
+14/10 - Elaboração de como seria recriado o handshake do AES dentro na aplicação.
+15/10 - Implementação das requisições Ajax para receber a chave pública do servidor.
+16/10 - Implementação das funções responsáveis por criar a chave AES do cliente para serem transportadas criptografadas com a chave pública do servidor por meio de requisições Ajax.
+17/10 - Criação dos métodos de validação dos formulários de login e cadastro.

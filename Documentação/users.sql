@@ -1,0 +1,55 @@
+-- MySQL dump 10.13  Distrib 5.7.17, for Win64 (x86_64)
+--
+-- Host: localhost    Database: db_projeto_seguranca
+-- ------------------------------------------------------
+-- Server version	5.7.18-log
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8 */;
+/*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
+/*!40103 SET TIME_ZONE='+00:00' */;
+/*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
+/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
+/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
+/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
+
+--
+-- Table structure for table `users`
+--
+
+DROP TABLE IF EXISTS `users`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `users` (
+  `iduser` int(11) NOT NULL AUTO_INCREMENT,
+  `dtregister` datetime NOT NULL,
+  `despassword` varchar(256) NOT NULL,
+  `desemail` varchar(45) NOT NULL,
+  `deslogin` varchar(256) NOT NULL,
+  `AESKey` varchar(512) NOT NULL,
+  PRIMARY KEY (`iduser`)
+) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `users`
+--
+
+LOCK TABLES `users` WRITE;
+/*!40000 ALTER TABLE `users` DISABLE KEYS */;
+INSERT INTO `users` VALUES (1,'2018-10-20 19:28:45','$2y$12$CgjwfgpPKyHHRV/SwcwLgep7NMOJdGCIKtD7ysMb30.wxj9U/2WCC','camilalm31@gmail.com','c7ad44cbad762a5da0a452f9e854fdc1e0e7a52a38015f23f3eab1d80b931dd472634dfac71cd34ebc35d16ab7fb8a90c81f975113d6c7538dc69dd8de9077ec','HM2DEZ7knR6GMxanvjrqN5/oWv/HCeYE/onLAGTo6Bw='),(18,'2018-11-20 23:46:23','$2y$12$vxDk3K6bOzf.KqU5TEOjZeI/FNSyl1xcn4ma2oQCT8IqEWemc9Rpy','vandercila@gmail.com','9cc80b4d9b334e6e73ac17d20444eaa21b2f6b1f3edeb8fc729e177d79d213430e58ecf4111645fa523fb700e1277afa4ac845d410f345f17ec0216cafc9b94c','Iovye1WoKKQIal6ocnxt6FNExc60zHR15et/NS+uXoo='),(19,'2018-11-21 00:11:24','$2y$12$MiSboE4A1NIWKTuOP69l0.vFhI5iOI2U2Y8UxLu0aNLRIkkNO8d3e','camila@gmail.com','33ce88bb4e16c9c9b838c62f9044304c4553b14c1bd92aeb520c0b261649f91d95603d1615d3bc1c81e757b9e8a540671e0762addf2eac6a2f01e68caaa73518','h2kmkinNz+PY2uOEHzYon0nRAxkvDA4lLcPc+19jjQo=');
+/*!40000 ALTER TABLE `users` ENABLE KEYS */;
+UNLOCK TABLES;
+/*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
+
+/*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
+/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
+/*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+/*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
+
+-- Dump completed on 2018-11-23 22:04:24

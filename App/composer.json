@@ -1,0 +1,20 @@
+{
+    "name": "caah_/projeto_seguranca",
+    "authors": [
+        {
+            "name": "lmCamila",
+            "email": "camilalm31@gmail.com"
+        }
+    ],
+    "require": {
+        "slim/slim": "^3.0",
+        "phpmailer/phpmailer": "^6.0",
+        "rain/raintpl": ">=3.0.0",
+        "phpseclib/phpseclib": "~2.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "Seguranca\\": "vendor\\seguranca\\php-classes\\src"
+        }
+    }
+}

@@ -1,0 +1,55 @@
+-- Rota formulario de cadastro
+URL: /novocadastro
+Metodo: GET
+
+-- Rota de cadastro de usuário
+URL: /usuario/novo
+Metodo: POST
+Envia: data={login, senha, email}
+Retorna: {"msg": "Sucesso"}
+
+-- Rota de upload de arquivo
+URL: /upload
+Metodo: POST
+Recebe: data={fileName, fileType, fileSize, fileContent, hashContent}
+Retorna: {"msg": "Sucesso"}
+
+-- Rota de listar arquivos do ususário
+URL: /listar/arquivos
+Metodo: GET
+Retorna: {name, modificationData, type, ext, size}
+
+-- Listar usuários (OPCIONAL, se der tempo)
+URL: /listar/usuarios
+Metodo: GET
+retorna: {loginUsuario}
+
+-- Deletar arquivo
+URL: /arquivo/delete/{identificacao} (COMBINAR QUAL SERÁ O ID, MAS ACHO QUE DA PRA SER O NOME DO ARQUIVO QUE VOU ENVIAR POIS CONCATENO OS MILISEGUNDOS NO COMEÇO DO ARQUIVO)
+Metodo: DELETE
+Recebe: data={id}
+Retorna: {"msg": "Sucesso"}
+
+-- Salvar "convite" de compartilhamento de arquivo
+URL: /compartilhar/arquivo
+Metodo: POST
+Recebe: data={login, arquivo} (LOGIN DO DESTINATÁRIO E NOME DO ARQUIVO)
+Retorna: {"msg": "Sucesso"}
+
+-- Negar convite de compartilhamento
+URL: /compartilhar/arquivo/aceitar
+Metodo: POST
+Recebe: data={id} (ID DO CONVITE VINDA DO BANCO DE DADOS)
+Retorna: {"msg": "Sucesso"}
+
+-- Aceitar convite de compartilhamento
+URL: /compartilhar/arquivo/negar
+Metodo: POST
+Recebe: data={id} (ID DO CONVITE VINDA DO BANCO DE DADOS)
+Retorna: {"msg": "Sucesso"}
+
+-- Verificar se existe algum "convite" de compartilhamento
+URL: /compartilhar/arquivo/checar
+Metodo: GET
+Retorna: {existe, user, arquivo} (EXISTE É BOOLEANO PARA CASO EXISTA O CONVITE, MAS ACHO QUE DEVEMOS ACHAR UMA SOLUÇÃO MELHOR KK)
+

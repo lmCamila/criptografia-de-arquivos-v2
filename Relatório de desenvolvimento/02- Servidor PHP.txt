@@ -1,0 +1,4 @@
+01/10 - Elaboração do modelo de banco de dados.
+07/10 - Criado o ambiente de desenvolvimento, assim como a estrutura das pastas.
+08/10 - Teste de implemetação de algums métodos de criptografia utilizados pelo PHP.
+09/10 - Criação das rotas de transportes das chaves entre cliente-servidor.
