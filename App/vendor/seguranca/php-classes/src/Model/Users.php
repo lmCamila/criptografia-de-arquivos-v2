@@ -13,9 +13,11 @@ class Users extends Model{
 		//realiza hash do login do usuario 
 		$user = hash("sha512",$login,false);
 		//recupera dados do usuario do servidor
-		$results = $sql->select("SELECT * FROM  users WHERE deslogin = :LOGIN",array(
+		$results = $sql->select("SELECT * FROM  users WHERE login = :LOGIN",array(
 			':LOGIN'=>$user
 		));
+		print_r($results);
+		exit();
 		//verifica se foi retornado algum usúario do banco
 		if(count($results) === 0){
 			throw new \Exception("Usuário inexistente ou senha inválida.");
@@ -23,7 +25,7 @@ class Users extends Model{
 		// se retornado algum valor , pega o primeiro valor do array e atribui a variavel data
 		$data = $results[0];
 		// se a senha estiver correta ele criará um usúario, atribuira os valores retornados na variavel data e seta na sessão
-		if(password_verify($password,$data["despassword"]) === true){
+		if(password_verify($password,$data["password"]) === true){
 			$user = new Users();
 			$user->setData($data);
 			$_SESSION[Users::SESSION] = $user->getValues();
@@ -62,11 +64,11 @@ class Users extends Model{
 		$encryption_key = base64_encode(openssl_random_pseudo_bytes(32));
 
 		$sql = new Sql();
-		$resutls = $sql->select("SELECT * FROM  users WHERE deslogin = :LOGIN",array(
+		$resutls = $sql->select("SELECT * FROM  users WHERE login = :LOGIN",array(
 			':LOGIN'=>$user));
 
 		if(count($resutls) === 0){
-			$sql->query("INSERT INTO users(dtregister, despassword, desemail, deslogin, AESKey) VALUES ( NOW(), :PASSWORD, :EMAIL, :LOGIN, :AESKey)",array(
+			$sql->query("INSERT INTO users(dtregister, password, email, login, AESKey) VALUES ( NOW(), :PASSWORD, :EMAIL, :LOGIN, :AESKey)",array(
 			':LOGIN'=> $user,
 			':PASSWORD'=> $password,
 			':EMAIL'=>$email,
@@ -115,7 +117,7 @@ class Users extends Model{
 		$fileType = $type[1];
 		$tamanho = Users::FileSizeConvert(filesize($dir));
 		$sql = new Sql();
-		$sql->query("INSERT INTO arquivos (idUsuario , modificationData , fileName, fileType, fileSize) VALUES ( :IDUSER, NOW(), :FILENAME, :FILETYPE, :FILESIZE)",array(
+		$sql->query("INSERT INTO files (idUser , modificationData , fileName, fileType, fileSize) VALUES ( :IDUSER, NOW(), :FILENAME, :FILETYPE, :FILESIZE)",array(
 			':IDUSER'=> $_SESSION['User']['iduser'],
 			':FILENAME'=>$fileName,
 			':FILETYPE'=>$fileType,
@@ -163,7 +165,7 @@ class Users extends Model{
 		$file = explode(',', $fileContent);
 		$dataDecrypted = base64_decode($file[1]);
 		$sql = new Sql();
-		$data = $sql->select("SELECT * FROM  users WHERE iduser = :iduser",array(
+		$data = $sql->select("SELECT * FROM  users WHERE id = :id",array(
 			':iduser'=>$_SESSION['User']['iduser'])); 
 		$results = $data[0];
 		$chaveAES = $results['AESKey'];
@@ -176,7 +178,7 @@ class Users extends Model{
 
 	public function decryptedFile($data ,$iduser){
 		$sql = new Sql();
-		$chave = $sql->select("SELECT * FROM  users WHERE iduser = :iduser",array(
+		$chave = $sql->select("SELECT * FROM  users WHERE id = :iduser",array(
 			':iduser'=>$iduser)); 
 		//$result= $sql->select("SELECT * FROM  arquivos WHERE idarquivo = 3");
 		//$arquivo = $result[0]['fileName'];
@@ -218,7 +220,7 @@ class Users extends Model{
 
 	public function listFilesUser($iduser){
 		$sql = new Sql();
-		$results = $sql->select("SELECT * FROM arquivos where idUsuario = :iduser",array(
+		$results = $sql->select("SELECT * FROM files where idUser = :iduser",array(
 			':iduser' => $iduser
 		));
 		return $results;
@@ -226,7 +228,7 @@ class Users extends Model{
 
 	public function getFileForId($idarquivo){
 		$sql = new Sql();
-		$results = $sql->select("SELECT * FROM arquivos WHERE idArquivo = :idarquivo",array(
+		$results = $sql->select("SELECT * FROM files WHERE id = :idarquivo",array(
 			':idarquivo' => $idarquivo
 		));
 		$data = null;
@@ -241,7 +243,7 @@ class Users extends Model{
 		$dirArquivo = $dirUser . "/" . $filename;
 		unlink($dirArquivo);
 		$sql = new Sql();
-		$sql->query("DELETE FROM arquivos WHERE idArquivo = :idarquivo",array(
+		$sql->query("DELETE FROM files WHERE id = :idarquivo",array(
 			":idarquivo" => $idarquivo
 		));
 	}
@@ -249,7 +251,7 @@ class Users extends Model{
 	public function getUserForDeslogin($deslogin){
 		$user = hash("sha512",$deslogin,false);
 		$sql = new Sql();
-		$results = $sql->select("SELECT * FROM users WHERE deslogin = :deslogin",array(
+		$results = $sql->select("SELECT * FROM users WHERE login = :deslogin",array(
 			":deslogin" => $user
 		));
 		foreach ($results as $key => $value) {
@@ -260,7 +262,7 @@ class Users extends Model{
 
 	public function sharingRecorder($remetente, $destinatario, $arquivo){
 		$sql = new Sql();
-		$sql->query("INSERT INTO arquivos_compartilhados(idRemetente, idDestinatario, idArquivo, nomeRemetente) VALUES(:idRemetente, :idDestinatario, :idArquivo,:nomeremetente)",array(
+		$sql->query("INSERT INTO shared_files(idSender, idRecipient, idFile, senderName) VALUES(:idRemetente, :idDestinatario, :idArquivo,:nomeremetente)",array(
 			":idRemetente" => $remetente, 
 			":idDestinatario" => $destinatario, 
 			":idArquivo" => $arquivo,
@@ -271,14 +273,14 @@ class Users extends Model{
 	public function cryptForSharing($idRemetente , $idDestinatario, $idarquivo){
 		//decriptografar
 		$sql = new Sql();
-		$chave = $sql->select("SELECT * FROM  users WHERE iduser = :iduser",array(
+		$chave = $sql->select("SELECT * FROM  users WHERE id = :iduser",array(
 			':iduser'=>$idRemetente));
-		$dest = $sql->select("SELECT * FROM  users WHERE iduser = :iduser",array(
+		$dest = $sql->select("SELECT * FROM  users WHERE id = :iduser",array(
 			':iduser'=>$idDestinatario));
 		$data = $this->getFileForId($idarquivo);
 		$results = $chave[0];
 		$destinatario = $dest[0];
-		$dirUser = "./users/".$results['deslogin'];
+		$dirUser = "./users/".$results['login'];
 		$dirArquivo = $dirUser . "/" . $data['fileName'];
 		$fileContent  = file_get_contents($dirArquivo); 
 
@@ -297,19 +299,19 @@ class Users extends Model{
 
 	public function confirmSharing($confirm , $idcompartilhamento , $idarquivo){
 		$sql = new Sql();
-		$sql->query("UPDATE arquivos_compartilhados SET statusCompartilhamento = :status WHERE idCompartilhamento = :idcompartilhamento" , array(
+		$sql->query("UPDATE shared_files SET status = :status WHERE id = :idcompartilhamento" , array(
 			":status" =>$confirm,
-			":idcompartilhamento" =>$idcompartilhamento
+			":id" =>$idcompartilhamento
 		));
 		if($confirm === true){
-			$results = $sql->select("SELECT * FROM arquivos_compartilhados WHERE idCompartilhamento = :idcompartilhamento",array(
+			$results = $sql->select("SELECT * FROM shared_files WHERE id = :idcompartilhamento",array(
 				":idcompartilhamento" =>$idcompartilhamento
 			));
 			$result = $results[0];
-			$this->cryptForSharing($result['idRemetente'] , $result['idDestinatario'], $result['idArquivo']);
+			$this->cryptForSharing($result['idSender'] , $result['idRecipient'], $result['idFile']);
 		}
 		if($confirm ===false){
-			$sql->query("DELETE FROM arquivos_compartilhados WHERE idCompartilhamento = :idcompartilhamento",array(
+			$sql->query("DELETE FROM shared_files WHERE id = :idcompartilhamento",array(
 				":idcompartilhamento"=>$idcompartilhamento
 			));
 		}
