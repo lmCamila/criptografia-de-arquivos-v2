@@ -28,11 +28,11 @@ CREATE TABLE `files` (
   `modificationData` datetime NOT NULL DEFAULT '0000-00-00 00:00:00' ON UPDATE CURRENT_TIMESTAMP,
   `fileName` varchar(256) NOT NULL,
   `fileType` varchar(7) NOT NULL,
-  `fileSize` varchar(10) NOT NULL,
+  `fileSize` varchar(10) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `idUser` (`idUser`),
   CONSTRAINT `files_ibfk_1` FOREIGN KEY (`idUser`) REFERENCES `users` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -41,6 +41,7 @@ CREATE TABLE `files` (
 
 LOCK TABLES `files` WRITE;
 /*!40000 ALTER TABLE `files` DISABLE KEYS */;
+INSERT INTO `files` VALUES (2,1,'2019-05-26 19:03:19','Ksy3C19X.jpg','jpg','255,41 KB');
 /*!40000 ALTER TABLE `files` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -53,4 +54,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-05-26 18:11:28
+-- Dump completed on 2019-05-26 21:20:39

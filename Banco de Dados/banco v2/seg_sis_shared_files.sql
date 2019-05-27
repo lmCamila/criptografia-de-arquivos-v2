@@ -16,31 +16,35 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `users`
+-- Table structure for table `shared_files`
 --
 
-DROP TABLE IF EXISTS `users`;
+DROP TABLE IF EXISTS `shared_files`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
  SET character_set_client = utf8mb4 ;
-CREATE TABLE `users` (
+CREATE TABLE `shared_files` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `dtregister` datetime NOT NULL DEFAULT '0000-00-00 00:00:00' ON UPDATE CURRENT_TIMESTAMP,
-  `password` varchar(256) NOT NULL,
-  `email` varchar(45) NOT NULL,
-  `login` varchar(256) NOT NULL,
-  `AESKey` varchar(45) NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+  `idSender` int(11) NOT NULL,
+  `idRecipient` int(11) NOT NULL,
+  `idFile` int(11) NOT NULL,
+  `senderName` varchar(60) NOT NULL,
+  `status` tinyint(4) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `idSender` (`idSender`),
+  KEY `idRecipient` (`idRecipient`),
+  CONSTRAINT `shared_files_ibfk_1` FOREIGN KEY (`idSender`) REFERENCES `users` (`id`),
+  CONSTRAINT `shared_files_ibfk_2` FOREIGN KEY (`idRecipient`) REFERENCES `users` (`id`),
+  CONSTRAINT `shared_files_ibfk_3` FOREIGN KEY (`idRecipient`) REFERENCES `users` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `users`
+-- Dumping data for table `shared_files`
 --
 
-LOCK TABLES `users` WRITE;
-/*!40000 ALTER TABLE `users` DISABLE KEYS */;
-INSERT INTO `users` VALUES (1,'2019-05-26 17:29:01','$2y$12$HJ25chBzjWnIZCuzKe8ZQuJ2gQfpmvxNGhTh3SmBm75DydQoeAZ0i','teste@email.com','b123e9e19d217169b981a61188920f9d28638709a5132201684d792b9264271b7f09157ed4321b1c097f7a4abecfc0977d40a7ee599c845883bd1074ca23c4af','/Yc+0eVCQPnx8z7WTHjxa+XsYt/ilZMSG5BNz8mpY8c='),(2,'2019-05-26 17:43:19','$2y$12$2mFqClXYW6qo1UWSKgZtKeB0FyfdIDO.YGAr07chKdUQEchQeFzh.','admin@teste.com','c7ad44cbad762a5da0a452f9e854fdc1e0e7a52a38015f23f3eab1d80b931dd472634dfac71cd34ebc35d16ab7fb8a90c81f975113d6c7538dc69dd8de9077ec','VqgUZZd4SbHpF6iwTHGjm8lNo9fUk921+9151S6xNso=');
-/*!40000 ALTER TABLE `users` ENABLE KEYS */;
+LOCK TABLES `shared_files` WRITE;
+/*!40000 ALTER TABLE `shared_files` DISABLE KEYS */;
+/*!40000 ALTER TABLE `shared_files` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -52,4 +56,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-05-26 18:11:29
+-- Dump completed on 2019-05-26 21:20:39
