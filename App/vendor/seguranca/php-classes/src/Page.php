@@ -10,7 +10,7 @@ private $tpl;
     private $defaults = [
         "data"=>[]
     ];
-    public function __construct($opts = array(),$tpl_dir = "./views/src/testeCliente/"){
+    public function __construct($opts = array(),$tpl_dir = "./views/src/"){
         $this->options = array_merge($this->defaults , $opts);
 
 		$config = array(
