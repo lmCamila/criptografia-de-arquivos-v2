@@ -5,7 +5,7 @@ A ideia deste projeto é desenvolver um sistema que permite usuários gravarem d
 Adicione os seguintes códigos aos seguintes arquivos : A pasta do projeto deve estar em C:. C:\Windows\System32\drivers\etc Arquivo: hosts 
 
 
-    127.0.0.1	http://www.criptografia.com.br
+    127.0.0.1	www.criptografia.com.br
 
 Em C:\xampp\apache\conf\extra Arquivo:httpd-vhosts.conf
 adicionar:
@@ -27,3 +27,9 @@ adicionar:
         </Directory>
     </VirtualHost>
 
+Configurar no mysql :
+
+
+
+    ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password
+    BY 'root';  
