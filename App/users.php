@@ -15,14 +15,15 @@ $app->post('/',function(Requests $request,Response $response,array $args){
 	$chaveAES = Users::privateKeyDecrypt($_SESSION['optionClient'], $_SESSION['optionPrivate']);
 	
 	$results = json_decode($_POST['data'],true);
-
+	$_SESSION['json'] = $results;
 	$decryptedLogin = Users::CryptoJSAesDecrypt($chaveAES,$results['salt'] ,$results['iv'] ,$results['login']);
 	$decryptedPass = Users::CryptoJSAesDecrypt($chaveAES,$results['salt'] ,$results['iv'] ,$results['pass']);
 	$_SESSION['desuser'] = $decryptedLogin;
+	$_SESSION['despass'] =$decryptedPass;
 	$user = new Users();
 	$user->login($decryptedLogin , $decryptedPass);
 
-	return $response->withRedirect('/blank', 301);
+	return $response->withRedirect('/arquivos', 301);
 	
 });
 
@@ -59,10 +60,18 @@ $app->get('/logout',function(Requests $request,Response $response,array $args){
 	Users::logout();
 	return $response->withRedirect('/', 301);
 });
-
-//pagina em branco
-$app->get('/blank', function(){
-
+ 
+$app->get('/testes',function(){
+	var_dump($_SESSION['json']);
+	var_dump($_SESSION['desuser']);
+	var_dump($_SESSION['despass']);
+	var_dump(Users::privateKeyDecrypt($_SESSION['optionClient'], $_SESSION['optionPrivate']));
+	var_dump($_SESSION['optionPublic']);
+	var_dump($_SESSION['optionPrivate']);
+	var_dump($_SESSION['optionClient']);
+	var_dump($_SESSION['otherValue']);
+	var_dump($_SESSION['hashClient']); 
 });
+
 
 ?>

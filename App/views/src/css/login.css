@@ -1,5 +1,7 @@
-body {
-    background: #CCC;
+#image{
+    background:linear-gradient(rgba(253, 253, 253, 0.3), rgba(243, 243, 243, 0.3)), url('https://images.unsplash.com/photo-1477039181047-efb4357d01bd?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=750&q=80');
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
 }
 
 .formLogin{

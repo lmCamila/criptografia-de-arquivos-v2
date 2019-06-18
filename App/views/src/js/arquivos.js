@@ -170,6 +170,7 @@ const getFileInfo = function (data) {
  */
 const sendFile = function () {
     if (window.fileEncrypt) {
+        console.log(JSON.stringify(window.fileEncrypt))
         openModalLoad(true, `<p>Aguarde. Salvando o arquivo...</p>`)
         fetch('/upload', {
             method: 'post',
@@ -234,7 +235,6 @@ const getFilesUser = function () {
             }
         })
         .then(data => {
-            console.log(data)
             window.files = JSON.parse(data)
             insetDataFilesTable(window.files)
             openModalLoad(false)
@@ -349,10 +349,12 @@ const checarSolicitacao = function () {
             fetch('compartilhar/arquivo/checar')
                 .then(data => {
                     if (data.status < 300 && data.status >= 200) {
+                        console.log(data)
                         return data.text()
                     }
                 })
                 .then(retorno => {
+                    console.log(retorno)
                     const r = JSON.parse(retorno)
                     openModalSolicitacao(r)
                 })
@@ -389,16 +391,19 @@ const transUserToUser = function (idSolicitacao, idArquivo) {
     })
         .then(data => {
             if (data.status < 300 && data.status >= 200) {
+                console.log(data)
                 return data.text()
             } else {
                 throw true
             }
         })
         .then(retorno => {
+            console.log(retorno)
             checkRespJSONServer2(retorno, `Arquivo compartilhado salvo`)
             getFilesUser()
         })
         .catch((error) => {
+            console.log(error)
             console.log('Erro: ', error)
             alertSend(`<strong>Erro! </strong>Falha ao salvar arquivo compartilhado`, 'alert-danger')
         })
@@ -414,6 +419,7 @@ const deleteCompart = function (idSolicitacao, idArquivo) {
         body: JSON.stringify(idsEncrypted)
     })
         .then(data => {
+            console.log(data)
             if (data.status < 300 && data.status >= 200) {
                 return data.text()
             } else {
@@ -421,9 +427,11 @@ const deleteCompart = function (idSolicitacao, idArquivo) {
             }
         })
         .then(retorno => {
+            console.log(retorno)
             checkRespJSONServer(retorno, `Solicitação de compartilhamento recusada`)
         })
         .catch((error) => {
+            console.log(error)
             console.log('Erro: ', error)
             alertSend(`<strong>Erro! </strong>Falha ao recusar arquivo compartilhado`, 'alert-danger')
         })
@@ -454,6 +462,7 @@ const sendCompartilhamento = function (e) {
         })
             .then(data => {
                 if (data.status < 300 && data.status >= 200) {
+                    console.log(data)
                     return data.text()
                 }
             })

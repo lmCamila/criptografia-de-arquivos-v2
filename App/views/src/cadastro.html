@@ -19,12 +19,14 @@
 	<link rel="stylesheet" href="./views/src/css/cadastro.css">
 </head>
 
-<body>
+<body style="background:linear-gradient(rgba(253, 253, 253, 0.3), rgba(243, 243, 243, 0.3)), url('https://images.unsplash.com/photo-1477039181047-efb4357d01bd?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=750&q=80');
+background-size: 100% 100%;
+background-repeat: no-repeat;">
 	<div class="formLogin">
 		<div class="row">
 			<div class="col">
 				<form name="formLogin" id="formLogin" method="post">
-					<h1>Novo usuário</h1>
+					<h1 style="color:aliceblue ;text-shadow: 2px 2px rgba(0, 0, 0, 0.411)">Novo usuário</h1>
 					<div class="form-group">
 						<input type="text" class="form-control" id="userLogin" name="userLogin" placeholder="Usuario">
 						<input type="password" class="form-control" id="userPassword" name="userPassword" placeholder="Senha">
@@ -32,8 +34,8 @@
 						<input type="text" class="form-control" id="userEmail" name="userEmail" placeholder="E-mail">
 					</div>
 					<div class="form-group">
-						<input class="btn btn-primary" type="button" onclick="validar(event)" value="Criar usuário">
-						<a class="btn btn-success" href="/" title="Voltar">Voltar</a>
+						<input class="btn btn-light" type="button" onclick="validar(event)" value="Criar usuário">
+						<a class="btn btn-info" href="/" title="Voltar">Voltar</a>
 					</div>
 				</form>
 			</div>

@@ -6,20 +6,22 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <script src="./views/src/testeCliente/js/arquivos.js"></script>
-  <script src="./views/src/testeCliente/js/handshake.js"></script>
-  <script src="./views/src/testeCliente/crypto-js/crypto-js.js"></script>
-  <script src="./views/src/testeCliente/jscriptografia/jsencrypt.min.js"></script>
+  <script src="./views/src/js/arquivos.js"></script>
+  <script src="./views/src/js/handshake.js"></script>
+  <script src="./views/src/crypto-js/crypto-js.js"></script>
+  <script src="./views/src/jscriptografia/jsencrypt.min.js"></script>
   <!-- Latest compiled and minified CSS -->
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
   <!-- jQuery library -->
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
   <!-- Latest compiled JavaScript -->
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-  <link rel="stylesheet" href="./views/src/testeCliente/css/arquivos.css">
+  <link rel="stylesheet" href="./views/src/css/arquivos.css">
 </head>
 
-<body>
+<body style="background:linear-gradient(rgba(253, 253, 253, 0.3), rgba(243, 243, 243, 0.3)), url('https://images.unsplash.com/photo-1477039181047-efb4357d01bd?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=750&q=80');
+background-size: 100% 100%;
+background-repeat: no-repeat;min-height: 100vh;">
   <div id="carregamento">
     <div id="barraDiv"></div>
   </div>
@@ -38,7 +40,7 @@
           <div id="listaArquivos" class="listaArquivos"></div>
         </div>
         <div class="form-group">
-          <button class="btn btn-success" type="submit">Compartilhar</button>
+          <button class="btn btn-primary" type="submit">Compartilhar</button>
         </div>
       </form>
     </div>
@@ -51,35 +53,18 @@
       <button class="btn btn-danger">Recusar</button>
     </div>
   </div>
-  <nav class="navbar navbar-inverse navbar-fixed-top">
-    <div class="container-fluid">
-      <div class="navbar-header">
-        <a class="navbar-brand" href="#">Sistema de arquivos</a>
-        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
-          <span class="icon-bar"></span>
-          <span class="icon-bar"></span>
-          <span class="icon-bar"></span>
-        </button>
-      </div>
-      <div class="collapse navbar-collapse" id="myNavbar">
-        <ul class="nav navbar-nav">
-          <li class="active"><a>Meus arquivos</a></li>
-          <li><a href="#" onclick="openModalCompartilhar();">Compartilhar</a></li>
-          <li><a href="/logout"><span class="glyphicon glyphicon-log-out"></span> Sair</a></li>
-        </ul>
-      </div>
-    </div>
-  </nav>
   <div class="container">
-    <div class="jumbotron">
-      <h1>Bem-vindo!</h1>
-      <p>Olá, <?php echo htmlspecialchars( $data["user"], ENT_COMPAT, 'UTF-8', FALSE ); ?>.</p>
+    <div style="background: #EEE; margin-bottom: 20px; padding-left: 50px;">
+      <h1>Olá,<?php echo htmlspecialchars( $data["user"], ENT_COMPAT, 'UTF-8', FALSE ); ?></h1>
+      <li><a>Meus arquivos</a></li>
+      <li><a href="#" onclick="openModalCompartilhar();">Compartilhar</a></li>
+      <li><a href="/logout">Sair</a></li>
     </div>
     <div class="arquivos">
-      <h1>Meus Arquivos</h1>
+      <h1>Lista de arquivos</h1>
       <div class="formEnviar">
         <input type="file" name="file" id="file">
-        <input class="btn btn-primary btn-xs" type="button" onclick="sendFile()" value="Enviar arquivo">
+        <input class="btn btn-warning btn-xs" type="button" onclick="sendFile()" value="Enviar arquivo">
       </div>
       <div id="divAlert" class="alert fade in">
         <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>

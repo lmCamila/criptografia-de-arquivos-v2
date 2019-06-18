@@ -176,9 +176,9 @@ $app->get('/compartilhar/arquivo/checar',function(){
 
 	$dataEncrypt = array();
 	foreach ($data as $key => $value) {
-		$aux = array('idCompartilhamento' => base64_encode($user->CryptoJSAesEncrypt($chaveAES, $salt ,$iv ,$value['idCompartilhamento'])),
-		'nomeRemetente' => base64_encode($user->CryptoJSAesEncrypt($chaveAES, $salt ,$iv ,$value['nomeRemetente'])),
-		'idArquivo' => base64_encode($user->CryptoJSAesEncrypt($chaveAES, $salt ,$iv ,$value['idarquivo'])),
+		$aux = array('idCompartilhamento' => base64_encode($user->CryptoJSAesEncrypt($chaveAES, $salt ,$iv ,$value['id'])),
+		'nomeRemetente' => base64_encode($user->CryptoJSAesEncrypt($chaveAES, $salt ,$iv ,$value['senderName'])),
+		'idArquivo' => base64_encode($user->CryptoJSAesEncrypt($chaveAES, $salt ,$iv ,$value['idFile'])),
 		'fileName' => base64_encode($user->CryptoJSAesEncrypt($chaveAES, $salt ,$iv ,$value['fileName'])),
 		'fileSize' => base64_encode($user->CryptoJSAesEncrypt($chaveAES, $salt ,$iv ,$value['fileSize']))
 		 );
@@ -239,7 +239,33 @@ $app->post('/compartilhar/arquivo/negar',function(){
 	return Users::returnSucess();
 });
 
+$app->get('/teste', function(){
+	Users::verifyLogin();
+	$user = new Users();
+	$data = $user->listSharing($_SESSION['User']['id']);
+	$salt = $user->generatedSalt();
+	$iv = $user->generatedIV();
 
+	$chaveAES = Users::privateKeyDecrypt($_SESSION['optionClient'], $_SESSION['optionPrivate']);
+
+	$dataEncrypt = array();
+	foreach ($data as $key => $value) {
+		$aux = array('idCompartilhamento' => base64_encode($user->CryptoJSAesEncrypt($chaveAES, $salt ,$iv ,$value['id'])),
+		'nomeRemetente' => base64_encode($user->CryptoJSAesEncrypt($chaveAES, $salt ,$iv ,$value['senderName'])),
+		'idArquivo' => base64_encode($user->CryptoJSAesEncrypt($chaveAES, $salt ,$iv ,$value['idFile'])),
+		'fileName' => base64_encode($user->CryptoJSAesEncrypt($chaveAES, $salt ,$iv ,$value['fileName'])),
+		'fileSize' => base64_encode($user->CryptoJSAesEncrypt($chaveAES, $salt ,$iv ,$value['fileSize']))
+		 );
+
+		array_push($dataEncrypt, $aux);	
+	}
+	var_dump($data);
+	return json_encode(array(
+		"listaCompartilhamentos" => $dataEncrypt,
+		"salt" => $salt,
+		"iv" => $iv
+	));
+});
 
 
 
